@@ -14,6 +14,7 @@ endfunction
 call s:SetGlobalOptDefault('vimpipe_invoke_map', '<LocalLeader>r')
 call s:SetGlobalOptDefault('vimpipe_close_map', '<LocalLeader>p')
 call s:SetGlobalOptDefault('vimpipe_silent', 0)
+call s:SetGlobalOptDefault('vimpipe_vertical', 0)
 
 function! VimPipe() range "{{{1
 	" Save local settings.
@@ -41,7 +42,8 @@ function! VimPipe() range "{{{1
 
 			" Split & open.
 			let split_command = "sbuffer " . vimpipe_buffer
-			if &splitright
+			let vertical_split = ( exists( "b:vimpipe_vertical" ) ? b:vimpipe_vertical : g:vimpipe_vertical )
+			if vertical_split == 1
 				let split_command = "vert " . split_command
 			endif
 			silent execute split_command
